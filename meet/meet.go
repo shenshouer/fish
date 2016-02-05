@@ -3,6 +3,7 @@ package main
 import (
     "net/http"
     "fmt"
+    "flag"
 )
 
 var singles = map[string] string {}
@@ -20,6 +21,10 @@ func meet(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    addr := ":8080"
+    flag.StringVar(&addr, "addr", addr, "Address Server listen to")
+    flag.Parse()
+
     http.Handle("/meet/", http.StripPrefix("/meet/", http.HandlerFunc(meet)))
-	http.ListenAndServe("localhost:8080", nil)
+	http.ListenAndServe(addr, nil)
 }
